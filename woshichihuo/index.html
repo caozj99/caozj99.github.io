@@ -1,0 +1,1320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>我是吃货</title>
+    <meta name="viewport" content="width=640,target-densityDpi=device-dpi, user-scalable=no">
+</head>
+<style type="text/css">
+    *{ margin:0; padding:0;}
+    body{ font-family:Tahoma,Arial,Roboto,"Droid Sans","Helvetica Neue","Droid Sans Fallback","Heiti SC",sans-self; }
+    li{ list-style:none;}
+    img{display: block;}
+    .load_page{position: absolute;left: 0;top:0;width: 100%;height: 100%;z-index: 100;background: #333;}
+    .load_box{width: 304px;height: 150px;position: absolute;left: 50%;top:50%;margin-left: -152px;margin-top: -75px;text-align: center;}
+    .box{width: 300px;height: 30px;border: 1px solid #ccc;margin: 20px auto;font-size: 24px; position: relative;border-radius: 15px;overflow: hidden;}
+    .progress_bar{position: absolute;left: 0;top:0;width: 100%;height: 30px;border-radius: 15px;text-align: center;background: rgb(118,118,118);z-index: 5;line-height: 30px;color: #fff;font-weight: bold;clip: rect(0,0px,30px,0);}
+    .font_show{position: absolute;left: 0;top:0;width: 100%;height: 30px;border-radius: 15px;text-align: center;background: #000;color:#fff;z-index: 2;line-height: 30px;font-weight: bold;}
+
+    .main_ul>li{position: absolute;left: 0;top:0;width: 100%;height: 100%;overflow: hidden;background: #fff;}
+    .main_ul>li:nth-child(1){z-index: 10;}
+    .main_ul>li:nth-child(2){z-index: 9;}
+    .main_ul>li:nth-child(3){z-index: 8;}
+    .main_ul>li:nth-child(4){z-index: 9;background: #fff;-webkit-transform:scale(0);transform:scale(0);-webkit-transform-origin:center bottom;transform-origin:center bottom;opacity: 0;}
+    .main_ul>li:nth-child(4).next_cur{-webkit-transform:scale(1);transform:scale(1);opacity: 1;-webkit-transition:1s;transition:1s;}
+    .main_ul>li:nth-child(4).cur{-webkit-animation:suoxiao 1s linear forwards;animation:suoxiao 1s linear forwards;-webkit-transform-origin:center bottom;transform-origin:center bottom;}
+    @-webkit-keyframes suoxiao{
+        from{-webkit-transform:scale(1);}
+        to{-webkit-transform:scale(0.2);}
+    }
+    @keyframes suoxiao{
+        from{transform:scale(1);}
+        to{transform:scale(0.2);}
+    }
+    .show_chihuo{background:rgb(145, 193, 223);position: relative;}
+    .show_chihuo .pic2{position: absolute;left: 10%;top:50%;margin-top: -33px;-webkit-transform:translate(-250px,150px) rotate(-90deg);
+        transform:translate(-250px,150px) rotate(-90deg);opacity: 0;}
+    .show_chihuo .pic2.cur{-webkit-transform:translate(0px,0px) rotate(0deg);transform:translate(0px,0px) rotate(0deg);-webkit-transition:1.5s;transition:1.5s;opacity: 1;}
+    @-webkit-keyframes fangda{
+        from{-webkit-transform:scale(1);}
+        50%{-webkit-transform:scale(1.06);}
+        to{-webkit-transform:scale(1);}
+    }
+    @keyframes fangda{
+        from{transform:scale(1);}
+        50%{transform:scale(1.06);}
+        to{transform:scale(1);}
+    }
+    .show_chihuo .pic3_box{width: 180px;height: 180px;background:url(images/pic3.png) no-repeat center center;position: absolute;right: 10%;top:50%;margin-top: -90px;text-align: center;line-height: 180px;font-size: 100px;font-weight: bold;color: #fff;
+        -webkit-transform:scale(0);transform:scale(0);-webkit-transition:0.5s 1.5s linear;}
+    .show_chihuo .pic3_box.cur{-webkit-transform:scale(1);transform:scale(1);}
+    .show_chihuo .pic3_box span{display:none;}
+    @-webkit-keyframes xiu{
+        from{-webkit-transform:rotate(-10deg);}
+        10%{-webkit-transform:rotate(5deg);}
+        20%{-webkit-transform:rotate(-8deg);}
+        30%{-webkit-transform:rotate(4deg);}
+        40%{-webkit-transform:rotate(-6deg);}
+        50%{-webkit-transform:rotate(3deg);}
+        60%{-webkit-transform:rotate(-4deg);}
+        70%{-webkit-transform:rotate(3deg);}
+        80%{-webkit-transform:rotate(-4deg);}
+        90%{-webkit-transform:rotate(7deg);}
+        100%{-webkit-transform:rotate(0deg);}
+    }
+    @keyframes xiu{
+        from{transform:rotate(-10deg);}
+        10%{transform:rotate(5deg);}
+        20%{transform:rotate(-8deg);}
+        30%{transform:rotate(4deg);}
+        40%{transform:rotate(-6deg);}
+        50%{transform:rotate(3deg);}
+        60%{transform:rotate(-4deg);}
+        70%{transform:rotate(3deg);}
+        80%{transform:rotate(-4deg);}
+        90%{transform:rotate(7deg);}
+        100%{transform:rotate(0deg);}
+    }
+    .pic4{width: 81px;height: 59px;background: url(images/pic4.png) no-repeat center center;position: absolute;left: 167px;top:52%;display: none;}
+    @-webkit-keyframes pic4{
+        from{-webkit-transform:translateX(-40px);}
+        100%{-webkit-transform:translateX(40px);}
+    }
+    .pic_f_four{-webkit-animation: pic4 1.5s linear infinite alternate;display:block;top:500px;left: 125px;}
+    .live_top{width:100%;height: 560px;position: relative;background: url(images/pic5.png) no-repeat center center;}
+    .img_list>img{position: absolute;bottom: 165px;opacity: 0;transition:1s;-webkit-transition:1s;}
+    .img_list>img:nth-child(1){left: 74px;-webkit-transform:translate(-150px,-91px);-webkit-transition-delay:1.4s;}
+    .img_list>img:nth-child(2){left: 168px;-webkit-transform:translate(-187px,-236px);-webkit-transition-delay:0.8s;}
+    .img_list>img:nth-child(3){left: 52%;margin-left: -66px;-webkit-transform:translate(-130px,-320px);-webkit-transition-delay:0.2s;}
+    .img_list>img:nth-child(4){left: 413px;-webkit-transform:translate(187px,-236px);-webkit-transition-delay:0.5s;}
+    .img_list>img:nth-child(5){left: 505px;-webkit-transform:translate(150px,-91px);-webkit-transition-delay:1.1s;}
+    .live_font{font-size: 30px;color: #fff;text-align: center;position: absolute;left: 0;width: 100%;bottom: 100px;
+        transition:1s 2s;-webkit-transition:1s 2s;opacity: 0;-webkit-transform:scale(0);}
+    .person{position: absolute;left: 50%;top:-5px;margin-left: -74px;opacity: 0;-webkit-transform:scale(0);transform:scale(0);
+        -wekbit-transition:0.8s 3s;transition:0.8s 3s;}
+    .live_top .pic4{top:75%;}
+    .live_bottom{overflow: hidden;position:relative;}
+    .live_bottom_l,.live_bottom_r{width: 320px;height: 100%;float: left;position: relative;
+        box-sizing:border-box;-webkit-box-sizing:border-box;}
+    .live_bottom_l,.constellation_ul>li .backface_box{background: url(images/pic12.png) no-repeat center center;background-size: 100% 100%;padding: 15px 20px;}
+    .constellation_title{width: 238px;height: 70px;text-align: center;line-height: 70px;background: rgba(255,255,255,0.4);margin: 0 auto;color:#fff;font-size: 28px;margin-top: 20px;}
+    .font_ms{text-align: center;color: #fff;font-size: 14px;padding: 0 10px;line-height: 1.8em;margin-top: 10px;}
+    .constellation_ul{width: 100%;height: 100%;-webkit-transform-style:preserve-3d;transform-style:preserve-3d;
+        -webkit-perspective:4500;perspective:4500;position: absolute;left: 0;top:0;z-index: 5}
+    .constellation_ul>li{width: 100%;height: 100%;position: absolute;left: 0;top:0;-webkit-transform-origin:left center;transform-origin:left center;-wekbit-transform:rotateY(0deg);transform:rotateY(0deg);
+    -webkit-transform-style:preserve-3d;transform-style:preserve-3d;}
+    .constellation_ul>li img{backface-visibility: hidden;-webkit-backface-visibility: hidden;z-index: 2;}
+    .constellation_ul>li img,.constellation_ul>li .backface_box{width: 100%;height: 100%;position: absolute;left: 0;top:0;}
+    .constellation_ul>li .backface_box{-webkit-transform:translateZ(-1px) rotateY(-180deg);}
+    .constellation_ul>li:nth-child(1){z-index: 3;}
+    .three_li_top{width: 100%;height: 560px;background: #9abed8;}
+    .pic13{width: 199px;height: 51px;margin: 0 auto;padding-top: 55px;}
+    .food_box{margin-top: 60px;position: relative;}
+    .food_ul{position: absolute;left: 0;top:0;width: 100%;}
+    .food_ul .food_div{float: left;color: #fff;text-align: center;font-size: 24px;line-height: 1.6em;margin: 0 2px;}
+    .food_ul li{overflow: hidden;padding: 0 14px;position: absolute;left: 0;top:0;opacity: 0;}
+    .food_ul .food_font_box{margin-top: 10px;}
+    .three_li_bottom{position: relative;background: #fff;}
+    .week_box{width: 260px;height: 260px;border-radius: 50%;border: 1px solid #D0D0D0;position: absolute;left: 50%;top:50%;margin-left: -130px;margin-top: -130px;}
+    .next_page{position: absolute;left: 0;top:0;z-index: 30px;display: none;width: 100%;height: 100%;}
+    .hand_img{position: absolute;left: 50%;top:50%;margin-left: -86px;margin-top: -86px;}
+    .small_cir{position: absolute;left: 50%;top:50%;margin: -13px 0 0 -13px;-webkit-transform:translateY(-63px) rotate(0deg);transform:translateY(-63px) rotate(0deg);-webkit-animation:rotate_cir 12s linear 0s infinite;-webkit-transform-origin:center 76px;}
+    @-webkit-keyframes rotate_cir{
+        from{-webkit-transform:translateY(-63px) rotate(0deg);}
+        to{-webkit-transform:translateY(-63px) rotate(360deg);}
+    }
+    @keyframes rotate_cir{
+        from{transform:translateY(-63px) rotate(0deg);}
+        to{transform:translateY(-63px) rotate(360deg);}
+    }
+    .smallist_cir{position: absolute;left: 50%;top:50%;width: 8px;height: 8px; margin: -4px 0 0 -4px;border-radius: 50%; background: green; -webkit-transform:translateY(-130px) rotate(0deg);transform:translateY(-130px) rotate(0deg);-webkit-animation:rotate_cir2 20s linear 0s infinite;-webkit-transform-origin:center 134px;}
+    @-webkit-keyframes rotate_cir2{
+        from{-webkit-transform:translateY(-130px) rotate(0deg);}
+        to{-webkit-transform:translateY(-130px) rotate(360deg);}
+    }
+    @keyframes rotate_cir2{
+        from{transform:translateY(-130px) rotate(0deg);}
+        to{transform:translateY(-130px) rotate(360deg);}
+    }
+    .week_day{position: absolute;left: 50%;top:50%;width: 100px;height: 100px; margin: -50px 0 0 -50px;border-radius: 50%; background:rgb(55, 166, 166);text-align: center;line-height: 100px;color: #fff;font-size: 24px; -webkit-transform:translateY(-180px) rotate(0deg);transform:translateY(-180px) rotate(0deg);-webkit-animation:rotate_cir3 16s linear 0s infinite;-webkit-transform-origin:center 230px;}
+    .week_day>span,.everday_food>span{position: absolute;left: 0;top:0;width: 100%;height: 100%;opacity: 0;-webkit-transform:rotateX(90deg);transform:rotateX(90deg);}
+    @-webkit-keyframes rotate_cir3{
+        from{-webkit-transform:translateY(-180px) rotate(0deg);}
+        to{-webkit-transform:translateY(-180px) rotate(360deg);}
+    }
+    @keyframes rotate_cir3{
+        from{transform:translateY(-180px) rotate(0deg);}
+        to{transform:translateY(-180px) rotate(360deg);}
+    }
+    .everday_food{position: absolute;left: 50%;top:50%;width: 100px;height: 100px; margin: -50px 0 0 -50px;border-radius: 50%; background:rgb(52, 171, 126);text-align: center;line-height: 100px;color: #fff;font-size: 24px; -webkit-transform:translateY(-130px) rotate(0deg);transform:translateY(-130px) rotate(0deg);-webkit-animation:rotate_cir4 10s linear 0s infinite;-webkit-transform-origin:center 180px;}
+    @-webkit-keyframes rotate_cir4{
+        from{-webkit-transform:translateY(-130px) rotate(0deg);}
+        to{-webkit-transform:translateY(-130px) rotate(360deg);}
+    }
+    @keyframes rotate_cir4{
+        from{transform:translateY(-130px) rotate(0deg);}
+        to{transform:translateY(-130px) rotate(360deg);}
+    }
+    .week_day>span:nth-child(1),.everday_food>span:nth-child(1){opacity: 1;-webkit-transform:rotateX(0);transform:rotateX(0);}
+    @-webkit-keyframes food1{
+        from{-webkit-transform:rotateX(0deg);transform:rotateX(0deg);opacity: 1;}
+        to{-webkit-transform:rotateX(-90deg);transform:rotateX(-90deg);opacity: 0;}
+    }
+    @keyframes food1{
+        from{transform:rotateX(0deg);transform:rotateX(0deg);opacity: 1;}
+        to{transform:rotateX(-90deg);transform:rotateX(-90deg);opacity: 0;}
+    }
+    @-webkit-keyframes food2{
+        from{-webkit-transform:rotateX(90deg);transform:rotateX(90deg);opacity: 0;}
+        50%{-webkit-transform:rotateX(-30deg);transform:rotateX(-30deg);opacity: 1;}
+        60%{-webkit-transform:rotateX(20deg);transform:rotateX(20deg);}
+        70%{-webkit-transform:rotateX(-20deg);transform:rotateX(-20deg);}
+        80%{-webkit-transform:rotateX(10deg);transform:rotateX(10deg);}
+        90%{-webkit-transform:rotateX(-15deg);transform:rotateX(-15deg);}
+        100%{-webkit-transform:rotateX(0deg);transform:rotateX(0deg);opacity:1;}
+    }
+    @keyframes food2{
+        from{transform:rotateX(90deg);transform:rotateX(90deg);opacity: 0;}
+        50%{transform:rotateX(-30deg);transform:rotateX(-30deg);opacity: 1;}
+        60%{transform:rotateX(20deg);transform:rotateX(20deg);}
+        70%{transform:rotateX(-20deg);transform:rotateX(-20deg);}
+        80%{transform:rotateX(10deg);transform:rotateX(10deg);}
+        90%{transform:rotateX(-15deg);transform:rotateX(-15deg);}
+        100%{transform:rotateX(0deg);transform:rotateX(0deg);opacity: 1;}
+    }
+    .foods_day{width: 522px;position: absolute;left: 50%;margin-left: -261px;opacity: 0;-webkit-transform:scale(0);transform:scale(0);}
+    .foods_day.cur{opacity: 1;-webkit-transform:scale(1);transform:scale(1);-webkit-transition:1s;transition:1s;}
+    .foods_day>img{float: left;margin: 0 5px 10px;}
+    .foods_day>img:nth-child(6){margin: 0 10px 10px;}
+    .answer_box{position: absolute;left: 0;top:0;width: 100%;height: 100%;opacity: 0;}
+    .answer_top{height: 560px;background: url(images/pic41.jpg) no-repeat center center;position: relative;}
+    .count_box{position: absolute;left: 20px;top:20px;width: 20px;height: 20px;text-align: center;line-height: 20px;font-size: 24px;}
+    .pic42{position: absolute;left:358px;top:90px;opacity: 0; -webkit-transform:translate(-50px,-10px) scale(0);transform:translate(-50px,-10px) scale(0);}
+    .pic43{position: absolute;left:392px;top:170px;opacity: 0; -webkit-transform:translate(-50px,-10px) scale(0);transform:translate(-50px,-10px) scale(0);}
+    .pic42.cur{-webkit-animation:doudong1 0.8s linear 1.5s forwards;animation:doudong1 0.8s linear 1.5s forwards;}
+    .pic43.cur{-webkit-animation:doudong1 0.8s linear 2s forwards;animation:doudong1 0.8s linear 2s forwards;}
+    @-webkit-keyframes doudong1{
+        from{-webkit-transform:translate(-50px,-10px) scale(0);opacity: 0;}
+        60%{-webkit-transform:translate(-100px,-5px) scale(0.3);}
+        80%{-webkit-transform:translate(0px,0px) scale(0.5);}
+        100%{-webkit-transform:translate(0px,0px) scale(1);opacity: 1;}
+    }
+    @keyframes doudong1{
+        from{transform:translate(-50px,-10px) scale(0);opacity: 0;}
+        60%{transform:translate(-100px,-5px) scale(0.3);}
+        80%{transform:translate(0px,0px) scale(0.5);}
+        100%{transform:translate(0px,0px) scale(1);opacity: 1;}
+    }
+    .answer_yno{width: 390px;height: 200px;position: absolute;left: 50%;margin-left: -195px;top:300px;}
+    .answer_yno .answer_list{width: 270px;height: 59px;position: relative;float: right;margin-bottom: 15px;}
+    .answer_pos{position: absolute;left: -66px;top:0;-webkit-transform:translateX(-46px);transform:translateX(-46px);}
+    .answer_pos.cur{-webkit-transform:translateX(0px);transform:translateX(0px);-webkit-transition:0.3s;transition:0.3s;}
+    .answer_bottom{background:rgb(145, 193, 223);position: relative;}
+    .question_mark{position: absolute;left: 50%;top:50%;margin-left: -75px;margin-top: -122px;}
+    @-webkit-keyframes answer_doudong2{
+        from{-webkit-transform:translate(0px,0px);}
+        5%{-webkit-transform:translate(0px,-3px);}
+        10%{-webkit-transform:translate(-1px,3px);}
+        15%{-webkit-transform:translate(3px,-4px);}
+        20%{-webkit-transform:translate(-5px,2px);}
+        25%{-webkit-transform:translate(3px,-3px);}
+        30%{-webkit-transform:translate(-2px,0px);}
+        35%{-webkit-transform:translate(-4px,-1px);}
+        40%{-webkit-transform:translate(-2px,3px);}
+        45%{-webkit-transform:translate(4px,-3px);}
+        50%{-webkit-transform:translate(-3px,2px);}
+        55%{-webkit-transform:translate(-3px,-2px);}
+        60%{-webkit-transform:translate(3px,-2px);}
+        65%{-webkit-transform:translate(3px,2px);}
+        70%{-webkit-transform:translate(-4px,2px);}
+        75%{-webkit-transform:translate(-4px,-2px);}
+        80%{-webkit-transform:translate(3px,2px);}
+        85%{-webkit-transform:translate(3px,-2px);}
+        90%{-webkit-transform:translate(-1px,2px);}
+        95%{-webkit-transform:translate(1px,-2px);}
+        100%{-webkit-transform:translate(0px,0px);}
+    }
+    @keyframes answer_doudong2{
+        from{transform:translate(0px,0px);}
+        5%{transform:translate(0px,-3px);}
+        10%{transform:translate(-1px,3px);}
+        15%{transform:translate(3px,-4px);}
+        20%{transform:translate(-5px,2px);}
+        25%{transform:translate(3px,-3px);}
+        30%{transform:translate(-2px,0px);}
+        35%{transform:translate(-4px,-1px);}
+        40%{transform:translate(-2px,3px);}
+        45%{transform:translate(4px,-3px);}
+        50%{transform:translate(-3px,2px);}
+        55%{transform:translate(-3px,-2px);}
+        60%{transform:translate(3px,-2px);}
+        65%{transform:translate(3px,2px);}
+        70%{transform:translate(-4px,2px);}
+        75%{transform:translate(-4px,-2px);}
+        80%{transform:translate(3px,2px);}
+        85%{transform:translate(3px,-2px);}
+        90%{transform:translate(-1px,2px);}
+        95%{transform:translate(1px,-2px);}
+        100%{transform:translate(0px,0px);}
+    }
+    @-webkit-keyframes answer_doudong3{
+        0%{-webkit-transform:translate(0px,0px) rotate(0deg);opacity: 1;}
+        40%{-webkit-transform:translate(0px,0px) rotate(25deg);}
+        50%{-webkit-transform:translate(0px,0px) rotate(50deg);}
+        60%{-webkit-transform:translate(0px,0px) rotate(40deg);}
+        70%{-webkit-transform:translate(0px,0px) rotate(52deg);}
+        80%{-webkit-transform:translate(0px,0px) rotate(44deg);}
+        90%{-webkit-transform:translate(0px,0px) rotate(50deg);opacity: 1;}
+        100%{-webkit-transform:translate(400px,500px) rotate(45deg);opacity: 0;}
+    }
+    @keyframes answer_doudong3{
+        0%{transform:translate(0px,0px) rotate(0deg);opacity: 1;}
+        40%{transform:translate(0px,0px) rotate(25deg);}
+        50%{transform:translate(0px,0px) rotate(50deg);}
+        60%{transform:translate(0px,0px) rotate(40deg);}
+        70%{transform:translate(0px,0px) rotate(52deg);}
+        80%{transform:translate(0px,0px) rotate(44deg);}
+        90%{transform:translate(0px,0px) rotate(50deg);opacity: 1;}
+        100%{transform:translate(400px,500px) rotate(45deg);opacity: 0;}
+    }
+    .girl{width: 362px;height: 246px;margin: 0 auto;top: 60px;position: relative;transform:scaleY(0);-webkit-transform:scaleY(0);}
+    .girl.cur{animation:change_h 1.5s 0.1s linear forwards;-webkit-animation:change_h 1.5s 0.1s linear forwards;
+        -webkit-transform-origin:center bottom;transform-origin:center bottom;}
+    @keyframes change_h{
+        0%{transform:scaleY(0);}
+        40%{transform:scaleY(1.02);}
+        55%{transform:scaleY(0.98);}
+        70%{transform:scaleY(1.02);}
+        85%{transform:scaleY(0.98);}
+        100%{transform:scaleY(1);}
+    }
+    @-webkit-keyframes change_h{
+        0%{-webkit-transform:scaleY(0);}
+        40%{-webkit-transform:scaleY(1.02);}
+        55%{-webkit-transform:scaleY(0.98);}
+        70%{-webkit-transform:scaleY(1.02);}
+        85%{-webkit-transform:scaleY(0.98);}
+        100%{-webkit-transform:scaleY(1);}
+    }
+    
+    @keyframes change_h{
+        0%{transform:scaleY(0);}
+        40%{transform:scaleY(1.02);}
+        55%{transform:scaleY(0.98);}
+        70%{transform:scaleY(1.02);}
+        85%{transform:scaleY(0.98);}
+        100%{transform:scaleY(1);}
+    }
+    .pic51{position: absolute;left: 30px;top:157px;-webkit-transform:translateX(0);transform:translateX(0);opacity: 0;}
+    .pic51.cur{-webkit-animation:ryrx 1.5s infinite linear;animation:ryrx 1.5s infinite linear;}
+    .pic52,.say_arrow,.tishi_arrow{position: absolute;right: 30px;top:157px;-webkit-transform:translateX(0);transform:translateX(0);opacity: 0;}
+    .pic52.cur,.tishi_arrow.cur,.zhiyin_arrow.cur{-webkit-animation:ryrx2 1.5s infinite linear;animation:ryrx2 1.5s infinite linear;}
+    @-webkit-keyframes ryrx{
+        from{-webkit-transform:translateX(0);opacity: 0;}
+        50%{opacity: 1;}
+        to{-webkit-transform:translateX(40px);opacity: 0;}
+    }
+    @keyframes ryrx{
+        from{transform:translateX(0);opacity: 0;}
+        50%{opacity: 1;}
+        to{transform:translateX(40px);opacity: 0;}
+    }
+    @-webkit-keyframes ryrx2{
+        from{-webkit-transform:translateX(0);opacity: 0;}
+        50%{opacity: 1;}
+        to{-webkit-transform:translateX(-40px);opacity: 0;}
+    }
+    @keyframes ryrx2{
+        from{transform:translateX(0);opacity: 0;}
+        50%{opacity: 1;}
+        to{transform:translateX(-40px);opacity: 0;}
+    }
+    .home_img_box{position: absolute;right: 0;top:0;z-index: 5;}
+    .home_img_box.cur{-webkit-transform:translateX(-1000px);transform:translateX(-1000px)-webkit-transition:0.3s;transition:0.4s;opacity: 0;}
+    .duibai_box{width: 128px;height: 227px;background: #fff;position: absolute;left: 50%;margin-left: -64px;bottom: 0;z-index: 6;
+    transform:scaleX(1);-webkit-transform:scaleX(1);}
+    @-webkit-keyframes change_scaleX{
+        from{-webkit-transform:scaleX(1);}
+        80%{-webkit-transform:scaleX(5);opacity: 1;}
+        to{-webkit-transform:scaleX(5);opacity: 0.6}
+    }
+    @keyframes change_scaleX{
+        from{transform:scaleX(1);}
+        80%{transform:scaleX(5);opacity: 1;}
+        to{transform:scaleX(5);opacity: 0.6}
+    }
+    .pic54{position: absolute;right: -450px;bottom: -40px;-webkit-transform:translateX(0px);transform:translateX(0px);z-index: 6;
+    -webkit-transition:0.6s 0.5s linear;transition:0.6s 0.5s linear;}
+    .pic54.cur{-webkit-transform:translateX(-450px);transform:translateX(-450px);}
+    .girl_say{position: absolute;height: 227px;width: 100%;left: 0;bottom: 0;opacity: 1;font-size: 48px;z-index: 6;}
+    .say_sec>div{padding-top: 25px;}
+    .say_arrow{right: 6px;top: 83px;}
+    .say_arrow.cur{-webkit-animation:ryrx2 1.5s infinite linear;animation:ryrx2 1.5s infinite linear;}
+    .girl_say>.say_sec{-webkit-transform:scale(0);transform:scale(0);opacity: 0;position: absolute;left: 0;top:0;}
+    .girl_say>.say_sec.cur{-webkit-transform:scale(1);transform:scale(1);opacity: 1;-webkit-transition:1s;transition:1s;}
+    .white_box{position: absolute;left: 0;bottom:0;height: 227px;width: 100%;opacity: 0;background: #fff;z-index: 8;-webkit-transform:scaleX(0);}
+    .white_box.cur{-webkit-animation:white_box 1s linear forwards;animation:white_box 1s linear forwards;}
+    @-webkit-keyframes white_box{
+        from{-webkit-transform:scaleX(0);opacity: 0;}
+        1%{-webkit-transform:scaleX(1);}
+        to{opacity: 1;-webkit-transform:scaleX(1);}
+    }
+    @keyframes white_box{
+        from{transform:scaleX(0);opacity: 0;}
+        1%{transform:scaleX(1);}
+        to{opacity: 1;transform:scaleX(1);}
+    }
+    .thank_box,.thank_font{position: absolute;left: 0;bottom: 0;height: 227px;background: #fff;display: none;width: 400px;z-index: 9;}
+    .thank_font{background: none;text-align: center;line-height: 227px;font-size: 72px;display: block;-webkit-transform:scale(0);transform:scale(0);}
+    .thank_font.cur{-webkit-transform:scale(1);transform:scale(1);-webkit-transition:1s 0.5s;transition:1s 0.5s;}
+    .pic53{-webkit-transform:translateX(0);transform:translateX(0);opacity: 1;}
+    .sea_img{position: absolute;left: 0;top:0;z-index: 4;-webkit-transform:translateX(0);transform:translateX(0);-webkit-transition:1s linear;transition:1s linear;}
+    .car{position: absolute;left:0px;bottom: 90px;z-index: 2;-webkit-transform:translateX(800px);transform:translateX(800px);}
+    .car.cur{-webkit-transform:translateX(0px);transform:translateX(0px);-webkit-transition:0.6s 1s;transition:0.6s 1s;}
+    .up_arrow{position: absolute;left: 50%;margin-left: -90px;bottom: -62px;}
+    .tishi_arrow{position: absolute;left: 565px;top:210px;}
+    .music_icon{width: 45px;height: 45px;position: absolute;background: url(images/music1.png) no-repeat center center;background-size: 45px 45px;-webkit-transform:rotate(0);transform:rotate(0);z-index: 95;right: 20px;top: 20px;}
+    .music_icon.cur{-webkit-animation:rotateXz 2s linear infinite;animation:rotateXz 2s linear infinite;}
+    @-webkit-keyframes rotateXz{
+        from{-webkit-transform:rotate(0);transform:rotate(0);}
+        to{-webkit-transform:rotate(360deg);transform:rotate(360deg);}
+    }
+    .zhiyin_arrow{position: absolute;right: 10px;top:50%;z-index: 10;margin-top: -34px;-webkit-transform:translateX(0);transform:translateX(0);opacity: 0;}
+
+
+
+    #up_arrow{position: absolute;left: 50%;bottom:10px; margin-left: -20px;z-index: 9; background: url(images/arrow.png) no-repeat center center;background-size: 30px 21px; width: 40px;height: 29px;
+    -webkit-animation:dong1 0.8s linear 0s infinite alternate;-moz-animation:dong1 0.8s linear 0s infinite alternate;
+    -ms-animation:dong1 0.8s linear 0s infinite alternate;-o-animation:dong1 0.8s linear 0s infinite alternate;animation:dong1 0.8s linear 0s infinite alternate;}
+
+    @-webkit-keyframes dong1{
+        from{bottom:10px;}
+        to{bottom:20px;}
+    }
+    @-moz-keyframes dong1{
+        from{bottom:10px;}
+        to{bottom:20px;}
+    }
+    @-ms-keyframes dong1{
+        from{bottom:10px;}
+        to{bottom:20px;}
+    }
+    @-o-keyframes dong1{
+        from{bottom:10px;}
+        to{bottom:20px;}
+    }
+    @keyframes dong1{
+        from{bottom:10px;}
+        to{bottom:20px;}
+    }
+</style>
+<script type="text/javascript" src="js/jquery-2.1.3.min.js"></script>
+<body>
+    <div class="load_page">
+        <div class="load_box">
+            <img src="images/load.jpg" style="margin:0 auto;">
+            <div class="box">
+                <div class="progress_bar">0%</div>
+                <div class="font_show">0%</div>
+            </div>
+        </div>
+    </div>
+    <div class="main">
+        <ul class="main_ul">
+            <li>
+                <img src="images/pic1.jpg" class="pic1">
+                <div class="show_chihuo">
+                    <img src="images/pic2.png" class="pic2">
+                    <div class="pic3_box"><span>秀</span></div>
+                    <div class="pic4"></div>
+                </div>
+            </li>
+            <li>
+                <div class="live_top">
+                    <div class="person"><img src="images/pic11.png"></div>
+                    <div class="img_list">
+                        <img src="images/pic6.png">
+                        <img src="images/pic7.png">
+                        <img src="images/pic8.png">
+                        <img src="images/pic9.png">
+                        <img src="images/pic10.png">
+                    </div>
+                    <div class="live_font">美食生活开始啦！</div>
+                    <div class="pic4"></div>
+                </div>
+                <div class="live_bottom">
+                    <div class="live_bottom_l">
+                        <div class="constellation_title">天秤座</div>
+                        <div class="font_ms">
+                            给大公无私的人喝的洒<br>
+                            酒谱：<br>
+                            朗姆酒30ml<br>
+                            菠萝汁30ml<br>
+                            柠檬汁30ml<br>
+                            菠萝片2-3片<br>
+                            碎冰少许<br>
+                            星座个性：不断追求中庸及平<br>
+                            衡，予人一种公平正直的感觉。<br>
+                            生活在热闹之中，精力充沛、<br>
+                            兴趣广泛、喜爱活动，处事审<br>
+                            理，坚定目标。
+                        </div>
+                    </div>
+                    <div class="live_bottom_r">
+                        <img src="images/pic19.jpg" style="width:100%;height:100%;">
+                        <ul class="constellation_ul">
+                            <li>
+                                <img src="images/pic13.jpg" class="xing_img">
+                                <div class="backface_box">
+                                    <div class="constellation_title">水瓶座</div>
+                                    <div class="font_ms">
+                                        给神秘主义的人喝的酒<br>
+                                        酒谱：<br>
+                                        金酒30ml<br>
+                                        蓝柑酒15ml<br>
+                                        柠檬汁10ml<br>
+                                        雪碧适量<br>
+                                        冰块5-6块<br>
+                                        星座个性：日新又新的求知个性，十足乐观，头脑敏锐，善于观察，道德崇高的梦想主义者，喜欢探索未来世界，思想新颖。
+                                    </div>
+                                </div>
+                                
+                            </li>
+                            <li>
+                                <img src="images/pic15.jpg" class="xing_img">
+                                <div class="backface_box">
+                                    <div class="constellation_title">双鱼座</div>
+                                    <div class="font_ms">
+                                        给浪漫的梦想家喝的酒<br>
+                                        酒谱：<br>
+                                        金酒45ml<br>
+                                        黑加仑子利口酒15ml<br>
+                                        冰块3-4块<br>
+                                        星座个性：感情丰富、追求浪漫，容易动情而且喜好幻想，重视精神生活，十分得异性缘，而且有时会表现出双重性格。
+                                    </div>
+                                </div>
+                            </li>
+                            <li>
+                                <img src="images/pic16.jpg" class="xing_img">
+                                <div class="backface_box">
+                                    <div class="constellation_title">射手座</div>
+                                    <div class="font_ms">
+                                        给不安于室的人喝的酒<br>
+                                        酒谱：<br>
+                                        冰镇啤酒半杯<br>
+                                        绿薄荷酒30ml<br>
+                                        柠檬汁15ml<br>
+                                        星座个性：强烈热爱自由，性情率直、不拘小节、思想新潮喜突破传统，对人生充满希望，爱结交朋友。
+                                    </div>
+                                    
+                                </div>
+                            </li>
+                            <li>
+                                <img src="images/pic17.jpg" class="xing_img">
+                                <div class="backface_box">
+                                    <div class="constellation_title">摩羯座</div>
+                                    <div class="font_ms">
+                                        给冷静理性的人喝的酒<br>
+                                        酒谱：<br>
+                                        伏特加30ml<br>
+                                        甘露咖啡蜜酒15ml<br>
+                                        冰块适量<br>
+                                        星座个性：讲求秩序、原则，固执自己的想法，沉默，不畏艰辛，刻苦耐劳，思想较保守、严肃，不容易与人亲近，行事缓慢。
+                                    </div>
+                                </div>
+                            </li>
+                            <li>
+                                <img src="images/pic18.jpg" class="xing_img">
+                                <div class="backface_box">
+                                    <div class="constellation_title">金牛座</div>
+                                    <div class="font_ms">
+                                        给任劳任怨的人喝的酒<br>
+                                        酒谱：<br>
+                                        冰镇啤酒适量<br>
+                                        伏特加30ml <br>
+                                        星座个性：坚持己见，不容易妥协，脚踏实地虽不见得一鸣惊人，但时间愈久愈见坚持。勤奋是最大特点，值得信任。
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="zhiyin_arrow"><img src="images/pic52.png"></div>
+                </div>
+            </li>
+            <li>
+                <div class="three_li_top">
+                    <div class="pic13"><img src="images/pic13.png"></div>
+                    <div class="food_box">
+                        <ul class="food_ul">
+                            <li>
+                                <div class="food_div">
+                                    <img src="images/pic20.jpg">
+                                    <div class="food_font_box">
+                                        <p>精致的咖啡</p>
+                                        <p>半糖主义</p>
+                                    </div>
+                                    
+                                </div>
+                                <div class="food_div">
+                                    <img src="images/pic21.jpg">
+                                    <div class="food_font_box">
+                                        <p>新鲜的水果</p>
+                                        <p>可爱樱桃</p>
+                                    </div>
+                                </div>
+                                <div class="food_div"><img src="images/pic22.jpg"></div>
+                            </li>
+                            <li>
+                                <div class="food_div">
+                                    <img src="images/pic23.jpg">
+                                    <div class="food_font_box">
+                                        <p>健康的颜色</p>
+                                        <p>点最斑斓</p>
+                                    </div>
+                                    
+                                </div>
+                                <div class="food_div">
+                                    <img src="images/pic24.jpg">
+                                    <div class="food_font_box">
+                                        <p>诱惑不可挡</p>
+                                        <p>美味</p>
+                                    </div>
+                                </div>
+                                <div class="food_div"><img src="images/pic25.jpg"></div>
+                            </li>
+                            <li>
+                                <div class="food_div">
+                                    <img src="images/pic26.jpg">
+                                    <div class="food_font_box">
+                                        <p>美丽的蛋糕文理</p>
+                                        <p>珍珠糖</p>
+                                    </div>
+                                    
+                                </div>
+                                <div class="food_div">
+                                    <img src="images/pic27.jpg">
+                                    <div class="food_font_box">
+                                        <p>精致的雪花</p>
+                                        <p>雪糖风车</p>
+                                    </div>
+                                </div>
+                                <div class="food_div"><img src="images/pic28.jpg"></div>
+                            </li>
+                            <li>
+                                <div class="food_div">
+                                    <img src="images/pic29.jpg">
+                                    <div class="food_font_box">
+                                        <p>水果多多</p>
+                                        <p>爱果蔬</p>
+                                    </div>
+                                    
+                                </div>
+                                <div class="food_div">
+                                    <img src="images/pic30.jpg">
+                                    <div class="food_font_box">
+                                        <p>黑珍珠</p>
+                                        <p>高贵冷艳</p>
+                                    </div>
+                                </div>
+                                <div class="food_div"><img src="images/pic31.jpg"></div>
+                            </li>
+                            <li>
+                                <div class="food_div">
+                                    <img src="images/pic32.jpg">
+                                    <div class="food_font_box">
+                                        <p>好饿~</p>
+                                        <p>紫菜火腿</p>
+                                    </div>
+                                    
+                                </div>
+                                <div class="food_div">
+                                    <img src="images/pic33.jpg">
+                                    <div class="food_font_box">
+                                        <p>雪白</p>
+                                        <p>Q弹</p>
+                                    </div>
+                                </div>
+                                <div class="food_div"><img src="images/pic34.jpg"></div>
+                            </li>
+                            <li>
+                                <div class="food_div">
+                                    <img src="images/pic35.jpg">
+                                    <div class="food_font_box">
+                                        <p>搭配新鲜水果</p>
+                                        <p>色彩鲜艳</p>
+                                    </div>
+                                    
+                                </div>
+                                <div class="food_div">
+                                    <img src="images/pic36.jpg">
+                                    <div class="food_font_box">
+                                        <p>新鲜的</p>
+                                        <p>咬下去</p>
+                                    </div>
+                                </div>
+                                <div class="food_div"><img src="images/pic37.jpg"></div>
+                            </li>
+                            <li>
+                                <div class="food_div">
+                                    <img src="images/pic38.jpg">
+                                    <div class="food_font_box">
+                                        <p>害羞的西红柿</p>
+                                        <p>萌萌哒</p>
+                                    </div>
+                                    
+                                </div>
+                                <div class="food_div">
+                                    <img src="images/pic39.jpg">
+                                    <div class="food_font_box">
+                                        <p>流口水</p>
+                                        <p>肉肉</p>
+                                    </div>
+                                </div>
+                                <div class="food_div"><img src="images/pic40.jpg"></div>
+                            </li>
+                        </ul>
+                        <div class="foods_day">
+                            <img src="images/pic34.jpg" width="120" height="140">
+                            <img src="images/pic28.jpg" width="120" height="140">
+                            <img src="images/pic37.jpg" width="120" height="140">
+                            <img src="images/pic25.jpg" width="120" height="140">
+                            <img src="images/pic34.jpg" width="160" height="186">
+                            <img src="images/pic22.jpg" width="160" height="186">
+                            <img src="images/pic31.jpg" width="160" height="186">
+                        </div>
+                    </div>
+                </div>
+                <div class="three_li_bottom">
+                    <div class="week_box">
+                        <img src="images/pic14.png" class="hand_img">
+                        <img src="images/pic15.png" class="small_cir">
+                        <div class="smallist_cir"></div>
+                        <div class="week_day">
+                            <span>星期一</span>
+                            <span>星期二</span>
+                            <span>星期三</span>
+                            <span>星期四</span>
+                            <span>星期五</span>
+                            <span>星期六</span>
+                            <span>星期天</span>
+                        </div>
+                        <div class="everday_food">
+                            <span>郁金香</span>
+                            <span>金蛋卷</span>
+                            <span>蛋糕</span>
+                            <span>水果盘</span>
+                            <span>寿司</span>
+                            <span>梅花肉</span>
+                            <span>鸡排</span>
+                        </div>
+                        <div class="next_page"></div>
+                    </div>
+                </div>
+            </li>
+            <li>
+                <div class="answer_box">
+                    <div class="answer_top">
+                        <div class="count_box">0</div>
+                        <img src="images/pic42.png" class="pic42">
+                        <img src="images/pic43.png" class="pic43">
+                        <div class="answer_yno">
+                            <div class="answer_list">
+                                <img src="images/pic45.png">
+                                <img src="images/pic44.png" class="answer_pos">
+                            </div>
+                            <div class="answer_list">
+                                <img src="images/pic47.png">
+                                <img src="images/pic46.png" class="answer_pos">
+                            </div>
+                            <div class="answer_list">
+                                <img src="images/pic49.png">
+                                <img src="images/pic48.png" class="answer_pos">
+                            </div>
+                        </div>
+                        <div class="pic4 pic_f_four"></div>
+                    </div>
+                    <div class="answer_bottom">
+                        <div class="question_mark"><img src="images/pic50.png"></div>
+                        <div class="girl">
+                            <img src="images/pic51.jpg">
+                        </div>
+                        <img src="images/pic51.png" class="pic51">
+                        <img src="images/pic52.png" class="pic52">
+                    </div>
+                </div>
+            </li>
+            <li>
+                <div class="sea_img">
+                    <img src="images/pic55.jpg" class="pic55">
+                    <div class="car">
+                        <img src="images/pic58.png">
+                    </div>
+                    <div class="tishi_arrow"><img src="images/pic52.png"></div>
+                </div>
+                <div class="home_img_box">
+                    <img src="images/pic53.jpg" class="pic53">
+                </div>
+                <img src="images/pic54.png" class="pic54">
+                <div class="duibai_box"></div>
+                <div class="girl_say">
+                    <div class="say_sec">
+                        <div style="text-indent:60px;">欢迎，</div>
+                        <div style="text-indent:200px;">这里就是我家啦！</div>
+                    </div>
+                    <div class="say_sec">
+                        <div style="text-indent:60px;">我做的食物，</div>
+                        <div style="text-indent:200px;">是不是很诱人呢？！</div>
+                    </div>
+                    <div class="say_sec">
+                        <div style="text-indent:60px;">快来和我一起成为，</div>
+                        <div style="text-indent:400px;font-size:60px;">吃货吧！</div>
+                    </div>
+                    <div class="say_sec">
+                        <div style="text-indent:10px;">不只在这里，还可以</div>
+                        <div style="text-indent:400px;">到海滩哦！</div>
+                    </div>
+                    <img src="images/pic52.png" class="say_arrow">
+                </div>
+                <div class="white_box"></div>
+                <div class="thank_box"></div>
+                <div class="thank_font">
+                    <span>thanks</span>
+                </div>
+            </li>
+        </ul>
+        <div class="music_icon"></div>
+        <audio src="http://124.167.236.31/7xkxd4.media1.z0.glb.clouddn.com/h520150515/chihuo/bg.mp3?wsiphost=local" style="display:none;" class="bg_music" loop="loop"></audio>
+    </div>
+</body>
+<script type="text/javascript">
+    $(window).load(function(){
+        var h=$(window).height();
+        var w=$(window).width();
+        var disX=0;
+        var iNow=0;
+        var zindex=31;
+        var bili=0;
+        var nowIndex=0;//当前食物
+        var tongji_num=0;
+        var offButn=true;
+        var timer=null;
+        var say_num=0;
+        var disX=0;
+        var disY=0;
+        var sea_num=0;
+        var audio1=new Audio();
+        audio1.src="http://124.167.236.31/7xkxd4.media1.z0.glb.clouddn.com/h520150515/chihuo/1.mp3?wsiphost=local";
+        var audio2=new Audio();
+        audio2.src="http://124.167.236.31/7xkxd4.media1.z0.glb.clouddn.com/h520150515/chihuo/2.mp3?wsiphost=local";
+        var audio4=new Audio();
+        audio4.src="http://124.167.236.31/7xkxd4.media1.z0.glb.clouddn.com/h520150515/chihuo/4.mp3?wsiphost=local";
+        var audio5=new Audio();
+        audio5.src="http://124.167.236.31/7xkxd4.media1.z0.glb.clouddn.com/h520150515/chihuo/5.mp3?wsiphost=local";
+        var audio6=new Audio();
+        audio6.src="http://124.167.236.31/7xkxd4.media1.z0.glb.clouddn.com/h520150515/chihuo/6.mp3?wsiphost=local";
+        var audio7=new Audio();
+        audio7.src="http://124.167.236.31/7xkxd4.media1.z0.glb.clouddn.com/h520150515/chihuo/7.mp3?wsiphost=local";
+        var audio8=new Audio();
+        audio8.src="http://124.167.236.31/7xkxd4.media1.z0.glb.clouddn.com/h520150515/chihuo/8.mp3?wsiphost=local";
+        $(".main").css({
+            "width": w,
+            "height": h
+        });
+        $(".pic53").css({"height":h,"width":h*2.16});  
+        $(".pic55").css({"height":h,"width":h*2.05});    
+        $(".live_bottom,.answer_bottom").css({"height":h-$(".live_top").height()-7,"marginTop":"7px"});
+        $(".three_li_bottom").css({"height":h-$(".three_li_top").height()});
+        $(document).on("touchmove",function(ev){
+            ev.preventDefault();
+        });
+        $(".constellation_ul>li").each(function(index, el) {
+            $(this).css("z-index",30-index);
+        });
+
+        //我是吃货动画
+        $(".show_chihuo").css("height",h-$(".pic1").height());
+        
+        $(".show_chihuo .pic2").on("webkitTransitionEnd transitionend",function(){
+            $(this).css("transition","");
+            $(this).css("animation","fangda 0.5s linear");
+        });
+
+
+        //秀 动画
+        
+        $(".show_chihuo .pic3_box").on("webkitTransitionEnd transitionend",function(){
+            $(this).children('span').css({"display":"block","animation":"xiu 0.8s linear"});
+            //放大镜水平移动
+            $(".show_chihuo .pic4").css("display","block");
+            $(".show_chihuo .pic4").css("animation","pic4 1.5s linear infinite alternate");
+        });
+
+
+        //////
+
+        $(".show_chihuo").on("touchstart",function(){
+            audio1.currentTime=0;
+            audio1.play();
+            stop_bg_music();
+            $(".main_ul>li").eq(0).hide();
+            $(".zhiyin_arrow").addClass('cur');
+            $(".main_ul>li").eq(1).find(".img_list").find("img").css({"transform":"translate(0px,0px)","opacity":1});
+            $(".live_font").css({"transform":"scale(1)","opacity":1});
+            $(".person").css({"opacity":1,"transform":"scale(1)"});
+            setTimeout(function(){
+                $(".main_ul>li").eq(1).find(".pic4").css("display","block");
+                $(".main_ul>li").eq(1).find(".pic4").css("animation","pic4 1.5s linear infinite alternate");
+            },4000);
+            
+        });
+
+        $(audio1).on("ended",function(){
+            paly_bg_music();
+        });
+        $(audio2).on("ended",function(){
+            paly_bg_music();
+        });
+        $(audio4).on("ended",function(){
+            paly_bg_music();
+        });
+        $(audio5).on("ended",function(){
+            paly_bg_music();
+        });
+        $(audio6).on("ended",function(){
+            paly_bg_music();
+        });
+        $(audio7).on("ended",function(){
+            paly_bg_music();
+        });
+        $(audio8).on("ended",function(){
+            paly_bg_music();
+        });
+
+        //////////////星座翻转效果
+        $(".live_bottom").on("touchstart",function(ev){
+            var a=0;
+            var touches=ev.originalEvent.changedTouches[0];
+            disX=touches.pageX;
+            $(this).on("touchend",function(ev){
+                zindex++;
+                var touches=ev.originalEvent.changedTouches[0];
+                if(disX-touches.pageX>20){//向左
+                    $(".zhiyin_arrow").hide();
+                    if(iNow<$(".constellation_ul>li").length-1){
+                        iNow++;
+                        audio2.currentTime=0;
+                        audio2.play();
+                        stop_bg_music();  
+                    }else{
+                        iNow=$(".constellation_ul>li").length-1;
+                    }
+                    a=iNow-1;
+                    $(".constellation_ul>li").eq(a).css({"transform":"rotateY(-180deg)","zIndex":zindex});   
+                }else if(touches.pageX-disX>20){  //向右
+                    if(iNow>0){
+                        iNow--;  
+                        audio2.currentTime=0;
+                        audio2.play();
+                        stop_bg_music(); 
+                    }else{
+                        iNow=0;
+                    }
+                    
+                    a=iNow;            
+                    $(".constellation_ul>li").eq(a).css({"transform":"rotateY(0deg)","zIndex":zindex});
+                }
+                $(".constellation_ul>li").eq(a).css("transition","0.5s");
+                $(this).off("touchmove");
+                $(this).off("touchend");
+                
+            });
+            return false;
+        });
+        
+        ///第二页缩小隐藏
+        $(".live_font").on("touchstart",function(){
+            audio1.currentTime=0;
+            audio1.play();
+            stop_bg_music(); 
+            $(".main_ul>li").eq(1).css({"transition":"1.5s","transform":"translateY("+((h-560)/2+560-h/2)+"px) scale(0)","opacity":0});
+        });
+        ////
+
+        ///切换每周食物
+        $(".hand_img").on("touchstart",function(){
+            if(offButn){
+                offButn=false;
+                if(nowIndex<$(".food_ul>li").length){
+                    nowIndex++;
+                }else{
+                    nowIndex=$(".food_ul>li").length;
+                }
+                nextIndex=nowIndex;
+                $(".food_ul>li").eq(nextIndex).css("opacity",1);
+                aniArr.outAn(nowIndex-1);
+                aniArr.inAn(nextIndex);
+                /////运动完成后的动画
+                $(".food_ul>li").eq(nextIndex).find(".food_div").eq(2).on("transitionend webkitTransitionEnd",function(){
+                    $(".week_day>span").eq(nowIndex-1).css("animation","food1 0.3s linear forwards");
+                    $(".week_day>span").eq(nextIndex).css("animation","food2 0.3s linear forwards");
+                    $(".everday_food>span").eq(nowIndex-1).css("animation","food1 1.5s linear forwards");
+                    $(".everday_food>span").eq(nextIndex).css("animation","food2 1.5s linear forwards");
+                    if(nowIndex==$(".food_ul>li").length){
+                        $(".food_ul").hide();
+                        $(".next_page").show();
+                        $(".foods_day").addClass('cur');
+                        $(".small_cir").animate({
+                            "opacity": 0,
+                            },
+                            500, function() {
+                            $(this).hide();
+                        });
+                        $(".smallist_cir").animate({
+                            "opacity": 0,
+                            },
+                            500, function() {
+                            $(this).hide();
+                        });
+                        $(".week_day").animate({
+                            "opacity": 0,
+                            },
+                            500, function() {
+                            $(this).hide();
+                        });
+                        $(".everday_food").animate({
+                            "opacity": 0,
+                            },
+                            500, function() {
+                            $(this).hide();
+                        });
+                    }
+                    offButn=true;
+                });
+            }   
+        });
+
+        
+        //////
+        
+        $(".next_page").on("touchstart",function(){
+            $(".main_ul>li").eq(3).addClass('next_cur');
+        });
+
+        $(".main_ul>li").eq(3).on("transitionend webkitTransitionEnd",function(ev){
+            if(!$(this).is(ev.target)){
+                return;
+            }
+            $(this).css("transition","");
+            $(".main_ul>li").eq(2).hide();
+            $(".answer_box").animate({
+                "opacity": 1,
+                },
+            200,function(){
+                $(".pic42,.pic43").addClass('cur');
+            });
+        });
+        $(".main_ul>li").eq(3).on("animationend webkitAnimationEnd",function(ev){
+            if(!$(this).is(ev.target)){
+                return;
+            }
+            $(this).fadeOut('slow', function() {
+                $(this).hide();
+                $(".pic54").addClass('cur');
+            });
+        });
+
+        $(".pic54").on("transitionend webkitTransitionEnd",function(){
+            audio6.currentTime=0;
+            audio6.play();
+            stop_bg_music();
+            $(".duibai_box").css({
+                "animation": 'change_scaleX 2s 0.8s linear forwards'
+            });
+        });
+        $(".pic54").on("touchstart",function(){
+            audio8.currentTime=0;
+            audio8.play();
+            stop_bg_music();
+        });
+
+
+        $(".duibai_box").on("animationend webkitAnimationEnd",function(ev){
+            var home_num=0;
+            timer=setInterval(function(){
+                home_num+=2;
+                if(home_num>($(".home_img_box").width()-w)){
+                    home_num=0;
+                }
+                $(".home_img_box").css("right",-home_num);
+            },30);
+            $(".girl_say").css("opacity",1);
+            setTimeout(function(){
+                $(".girl_say>.say_sec").eq(0).addClass('cur');
+                $(".say_arrow").addClass('cur');
+            },800);
+        });
+
+        $(".answer_pos").on("touchstart",function(){
+            if(!$(this).hasClass("cur")){
+                audio4.currentTime=0;
+                audio4.play();
+                stop_bg_music();
+                tongji_num++;
+                $(this).addClass('cur');
+                $(".count_box").html(tongji_num);
+                $(".pic_f_four").hide();
+            }
+            
+        });
+        $(".answer_pos").on("transitionend webkitTransitionEnd",function(){
+            if(tongji_num==3){
+                $(".question_mark").css({"animation":"answer_doudong3 0.8s linear forwards","transform":"translate(0,0) rotate(0)","transform-origin":"left top"});
+            }else{
+                $(".question_mark").css({"animation":"answer_doudong2 0.8s linear forwards","transform":"translate(0px,0px)"});
+            }
+            
+        });
+        $(".question_mark").on("animationend webkitAnimationEnd",function(){
+            if(tongji_num==3){
+                audio5.currentTime=0;
+                audio5.play();
+                stop_bg_music();
+                $(this).css("animation","").hide();
+                $(".girl").addClass('cur');
+                $(".pic51").addClass('cur');
+                $(".pic52").addClass('cur');
+            }else{
+                $(this).css("animation","");
+            }
+            
+        });
+
+        $(".girl").on("touchstart",function(){
+            $(".main_ul>li").eq(3).addClass('cur');
+        });  
+
+        $(".girl_say").on("touchstart",function(){
+            $(".say_arrow").hide();
+            if(say_num<$(".girl_say>.say_sec").length-1){
+                say_num++;
+            }else{
+                audio7.currentTime=0;
+                audio7.play();
+                stop_bg_music();
+                $(".girl_say>.say_sec").eq(say_num).hide();
+                $(".white_box").show().addClass('cur');
+            }
+            $(".girl_say>.say_sec").each(function(index, el) {
+                if(index!=say_num){
+                    $(this).removeClass('cur');
+                }else{
+                    $(this).addClass('cur');
+                }
+                
+            });
+        });
+        /////
+        $(".white_box").on("animation webkitAnimationEnd",function(){
+            $(".duibai_box,.girl_say").hide();
+            $(this).animate({
+                "width": 400,
+                },
+            1500,function(){
+                $(this).hide();
+                clearInterval(timer);
+                $(".home_img_box").addClass('cur');
+                $(".thank_box").show().animate({
+                    "opacity": 0.6
+                    },
+                    800, function() {
+                    $(".thank_font").addClass('cur');
+                    $(".tishi_arrow").addClass('cur');
+                    $(".car").addClass('cur');
+                });
+            });
+        });
+
+        $(".home_img_box").on("transitionend webkitTransitionEnd",function(){
+            $(this).hide();
+        });
+
+
+        $(".sea_img").on("touchstart",function(ev){//******************************************
+            var touches=ev.originalEvent.changedTouches[0];
+            disX=touches.pageX;
+            $(this).on("touchend",function(ev){
+                var touches=ev.originalEvent.changedTouches[0];
+                if(touches.pageX-disX>20){//向右
+                    if(sea_num>0){
+                        sea_num--
+                    }else{
+                        sea_num=0;
+                    }
+                }else if(disX-touches.pageX>20){  //向左
+                    $(".tishi_arrow").hide();
+                    if(sea_num<3){
+                        sea_num++
+                    }else{
+                        sea_num=3;
+                    }
+                }
+                $(".sea_img").css("transform","translateX("+-sea_num*($(".pic55").width()/4/1.12)+"px)");
+                $(this).off("touchend");
+            });
+            return false;
+        });
+
+
+
+        var aniArr={
+            inAn:function(index){
+                setTimeout(function(){
+                    $(".food_ul>li").eq(index).find(".food_div").css({
+                        "transform": 'translateX(0)',
+                        "opacity":1,
+                        "transition": '1s 0.4s'
+                    });
+                }, 100);
+            },
+            outAn:function(index){
+                $(".food_ul>li").eq(index).find(".food_div").eq(2).css({
+                    "transform": 'translateX(700px)',
+                    "opacity": 0,
+                    "transition": '0.5s'
+                });
+                $(".food_ul>li").eq(index).find(".food_div").eq(1).css({
+                    "transform": 'translateX(700px)',
+                    "opacity": 0,
+                    "transition": '0.5s 0.2s'
+                });
+                $(".food_ul>li").eq(index).find(".food_div").eq(0).css({
+                    "transform": 'translateX(700px)',
+                    "opacity": 0,
+                    "transition": '0.5s 0.3s'
+                });
+            }
+        };
+        for(var i=1;i<$(".food_ul>li").length;i++){
+            aniArr.outAn(i);
+        }
+        $(".food_ul>li").eq(0).css("opacity",1);
+
+
+        ///////////音乐
+        $(".music_icon").on("touchstart",function(){
+            if($(".bg_music").get(0).paused){
+                $(this).addClass('cur');
+                $(".bg_music").get(0).play();
+            }else{
+                $(this).removeClass('cur');
+                $(".bg_music").get(0).pause();
+            }
+        });
+
+        
+        //////////////////////////////////////
+        var num=0;
+        var arr=[
+            "http://h5.twttmob.com/woshichihuo/images/load.jpg",
+            "http://h5.twttmob.com/woshichihuo/images/pic1.jpg",
+            "http://h5.twttmob.com/woshichihuo/images/pic2.png",
+            "http://h5.twttmob.com/woshichihuo/images/pic3.png",
+            "http://h5.twttmob.com/woshichihuo/images/pic4.png",
+            "http://h5.twttmob.com/woshichihuo/images/pic5.png",
+            "http://h5.twttmob.com/woshichihuo/images/pic6.png",
+            "http://h5.twttmob.com/woshichihuo/images/pic7.png",
+            "http://h5.twttmob.com/woshichihuo/images/pic8.png",
+            "http://h5.twttmob.com/woshichihuo/images/pic9.png",
+            "http://h5.twttmob.com/woshichihuo/images/pic10.png",
+            "http://h5.twttmob.com/woshichihuo/images/pic11.png",
+            "http://h5.twttmob.com/woshichihuo/images/pic12.png",
+            "http://h5.twttmob.com/woshichihuo/images/pic13.png",
+            "http://h5.twttmob.com/woshichihuo/images/pic13.jpg",
+            "http://h5.twttmob.com/woshichihuo/images/pic14.png",
+            "http://h5.twttmob.com/woshichihuo/images/pic14.jpg",
+            "http://h5.twttmob.com/woshichihuo/images/pic15.png",
+            "http://h5.twttmob.com/woshichihuo/images/pic15.jpg",
+            "http://h5.twttmob.com/woshichihuo/images/pic16.jpg",
+            "http://h5.twttmob.com/woshichihuo/images/pic17.jpg",
+            "http://h5.twttmob.com/woshichihuo/images/pic18.jpg",
+            "http://h5.twttmob.com/woshichihuo/images/pic19.jpg",
+            "http://h5.twttmob.com/woshichihuo/images/pic20.jpg",
+            "http://h5.twttmob.com/woshichihuo/images/pic21.jpg",
+            "http://h5.twttmob.com/woshichihuo/images/pic22.jpg",
+            "http://h5.twttmob.com/woshichihuo/images/pic23.jpg",
+            "http://h5.twttmob.com/woshichihuo/images/pic24.jpg",
+            "http://h5.twttmob.com/woshichihuo/images/pic25.jpg",
+            "http://h5.twttmob.com/woshichihuo/images/pic26.jpg",
+            "http://h5.twttmob.com/woshichihuo/images/pic27.jpg",
+            "http://h5.twttmob.com/woshichihuo/images/pic28.jpg",
+            "http://h5.twttmob.com/woshichihuo/images/pic29.jpg",
+            "http://h5.twttmob.com/woshichihuo/images/pic30.jpg",
+            "http://h5.twttmob.com/woshichihuo/images/pic31.jpg",
+            "http://h5.twttmob.com/woshichihuo/images/pic32.jpg",
+            "http://h5.twttmob.com/woshichihuo/images/pic33.jpg",
+            "http://h5.twttmob.com/woshichihuo/images/pic34.jpg",
+            "http://h5.twttmob.com/woshichihuo/images/pic35.jpg",
+            "http://h5.twttmob.com/woshichihuo/images/pic36.jpg",
+            "http://h5.twttmob.com/woshichihuo/images/pic37.jpg",
+            "http://h5.twttmob.com/woshichihuo/images/pic38.jpg",
+            "http://h5.twttmob.com/woshichihuo/images/pic39.jpg",
+            "http://h5.twttmob.com/woshichihuo/images/pic40.jpg",
+            "http://h5.twttmob.com/woshichihuo/images/pic41.jpg",
+            "http://h5.twttmob.com/woshichihuo/images/pic42.png",
+            "http://h5.twttmob.com/woshichihuo/images/pic43.png",
+            "http://h5.twttmob.com/woshichihuo/images/pic44.png",
+            "http://h5.twttmob.com/woshichihuo/images/pic45.png",
+            "http://h5.twttmob.com/woshichihuo/images/pic46.png",
+            "http://h5.twttmob.com/woshichihuo/images/pic47.png",
+            "http://h5.twttmob.com/woshichihuo/images/pic48.png",
+            "http://h5.twttmob.com/woshichihuo/images/pic49.png",
+            "http://h5.twttmob.com/woshichihuo/images/pic50.png",
+            "http://h5.twttmob.com/woshichihuo/images/pic51.png",
+            "http://h5.twttmob.com/woshichihuo/images/pic51.jpg",
+            "http://h5.twttmob.com/woshichihuo/images/pic52.png",
+            "http://h5.twttmob.com/woshichihuo/images/pic53.jpg",
+            "http://h5.twttmob.com/woshichihuo/images/pic54.png",
+            "http://h5.twttmob.com/woshichihuo/images/pic55.jpg",
+            "http://h5.twttmob.com/woshichihuo/images/pic56.jpg",
+            "http://h5.twttmob.com/woshichihuo/images/pic57.jpg",
+            "http://h5.twttmob.com/woshichihuo/images/pic58.jpg",
+            "http://h5.twttmob.com/woshichihuo/images/pic58.png",
+            "http://h5.twttmob.com/woshichihuo/images/pic59.png"
+        ];
+        for(var i=0;i<arr.length;i++){
+            var oImg=new Image();
+            oImg.onload=function(){
+                progress();
+            }
+            oImg.onerror=function(){
+                progress();
+            }
+            oImg.src=arr[i];
+            function progress(){
+                num++;
+                $(".progress_bar").css("clip","rect(0,"+num/arr.length*300+"px,30px,0)").html(Math.round(num/arr.length*100)+"%");
+                //alert(num)
+                $(".font_show").html(Math.round(num/arr.length*100)+"%");
+                if(num==arr.length){
+                    $(".load_page").hide();
+                    aniArr.inAn(0);
+                    $(".show_chihuo .pic3_box").addClass('cur');
+                    $(".show_chihuo .pic2").addClass('cur');
+                    $(".music_icon").addClass('cur');
+                    $(".bg_music").get(0).play();
+                }
+            }
+        }
+        //////////
+
+        function paly_bg_music(){
+            $(".music_icon").addClass("cur");
+            $(".bg_music").get(0).play();
+        }
+        function stop_bg_music(){
+            $(".music_icon").removeClass("cur");
+            $(".bg_music").get(0).pause();
+        }
+    })
+</script>
+</html>
