@@ -855,7 +855,7 @@
         $(".show_chihuo").on("touchstart",function(){
             audio1.currentTime=0;
             audio1.play();
-            stop_bg_music();
+            //stop_bg_music();
             $(".main_ul>li").eq(0).hide();
             $(".zhiyin_arrow").addClass('cur');
             $(".main_ul>li").eq(1).find(".img_list").find("img").css({"transform":"translate(0px,0px)","opacity":1});
@@ -869,25 +869,25 @@
         });
 
         $(audio1).on("ended",function(){
-            paly_bg_music();
+            //paly_bg_music();
         });
         $(audio2).on("ended",function(){
-            paly_bg_music();
+            //paly_bg_music();
         });
         $(audio4).on("ended",function(){
-            paly_bg_music();
+            //paly_bg_music();
         });
         $(audio5).on("ended",function(){
-            paly_bg_music();
+            //paly_bg_music();
         });
         $(audio6).on("ended",function(){
-            paly_bg_music();
+            //paly_bg_music();
         });
         $(audio7).on("ended",function(){
-            paly_bg_music();
+            //paly_bg_music();
         });
         $(audio8).on("ended",function(){
-            paly_bg_music();
+            //paly_bg_music();
         });
 
         //////////////星座翻转效果
@@ -904,7 +904,7 @@
                         iNow++;
                         audio2.currentTime=0;
                         audio2.play();
-                        stop_bg_music();  
+                        //stop_bg_music();  
                     }else{
                         iNow=$(".constellation_ul>li").length-1;
                     }
@@ -915,7 +915,7 @@
                         iNow--;  
                         audio2.currentTime=0;
                         audio2.play();
-                        stop_bg_music(); 
+                        //stop_bg_music(); 
                     }else{
                         iNow=0;
                     }
@@ -935,7 +935,7 @@
         $(".live_font").on("touchstart",function(){
             audio1.currentTime=0;
             audio1.play();
-            stop_bg_music(); 
+            //stop_bg_music(); 
             $(".main_ul>li").eq(1).css({"transition":"1.5s","transform":"translateY("+((h-560)/2+560-h/2)+"px) scale(0)","opacity":0});
         });
         ////
@@ -1026,7 +1026,7 @@
         $(".pic54").on("transitionend webkitTransitionEnd",function(){
             audio6.currentTime=0;
             audio6.play();
-            stop_bg_music();
+            //stop_bg_music();
             $(".duibai_box").css({
                 "animation": 'change_scaleX 2s 0.8s linear forwards'
             });
@@ -1034,7 +1034,7 @@
         $(".pic54").on("touchstart",function(){
             audio8.currentTime=0;
             audio8.play();
-            stop_bg_music();
+            //stop_bg_music();
         });
 
 
@@ -1058,7 +1058,7 @@
             if(!$(this).hasClass("cur")){
                 audio4.currentTime=0;
                 audio4.play();
-                stop_bg_music();
+                //stop_bg_music();
                 tongji_num++;
                 $(this).addClass('cur');
                 $(".count_box").html(tongji_num);
@@ -1078,7 +1078,7 @@
             if(tongji_num==3){
                 audio5.currentTime=0;
                 audio5.play();
-                stop_bg_music();
+                //stop_bg_music();
                 $(this).css("animation","").hide();
                 $(".girl").addClass('cur');
                 $(".pic51").addClass('cur');
@@ -1100,7 +1100,7 @@
             }else{
                 audio7.currentTime=0;
                 audio7.play();
-                stop_bg_music();
+                //stop_bg_music();
                 $(".girl_say>.say_sec").eq(say_num).hide();
                 $(".white_box").show().addClass('cur');
             }
