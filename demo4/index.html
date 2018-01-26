@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>《一路向前》赤赤的秘密，用手涂一涂！</title>
+	<meta id="metaDescription" name="description" content="陈赫最新电影《一路向前》，贱萌无敌么么哒，八月六日呵呵上映。" />
+	<meta content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0,user-scalable=no" name="viewport" id="viewport" />
+	<link rel="stylesheet" type="text/css" href="css/style.css">
+</head>
+<script type="text/javascript" src="js/zepto.js"></script>
+<script type="text/javascript" src="js/event.js"></script>
+<script type="text/javascript" src="js/touch.js"></script>
+<script type="text/javascript" src="js/fx.js"></script>
+<script type="text/javascript" src="js/canvas.js"></script>
+<script type="text/javascript" src="js/ajax.js"></script>
+<script type="text/javascript" src="js/weixin.js"></script>
+<script>
+var url = location.href.split('#')[0];
+$.ajax({
+	url: 'http://twttmob.com/active.php/Token/index',
+	type: 'POST',
+	dataType: 'json',
+    data: {url: url},
+	complete: function(xhr, textStatus) {
+		//called when complete
+	},
+	success: function(json) {
+		console.log(json)
+		Weixin(json)
+	},
+	error: function(json) {}
+})
+
+function Weixin(json) {
+	wx.config({
+		debug: false,
+		appId: 'wx9ef75f25acc4a2dc',
+		timestamp: json.timestamp,
+		nonceStr: json.noncestr,
+		signature: json.signature,
+		jsApiList: [
+			'checkJsApi',
+			'onMenuShareTimeline',
+			'onMenuShareAppMessage'
+		]
+	})
+	wx.ready(function() {
+		wx.checkJsApi({
+			jsApiList: [
+				'onMenuShareTimeline',
+				'onMenuShareAppMessage'
+			],
+			success: function(res) {
+				//alert(JSON.stringify(res));
+			}
+		})
+		wx.onMenuShareTimeline({
+		    title: '《一路向前》赤赤的秘密，用手涂一涂！', // 分享标题
+		    link: '', // 分享链接
+		    imgUrl: 'images/logo.jpg', // 分享图标
+		    success: function () { 
+		        // 用户确认分享后执行的回调函数
+		    },
+		    cancel: function () { 
+		        alert(1)
+		    }
+		});
+		wx.onMenuShareAppMessage({
+		    title: '《一路向前》赤赤的秘密，用手涂一涂！', // 分享标题
+		    desc: 'aaaaaaaa', // 分享描述
+		    link: '', // 分享链接
+		    imgUrl: 'images/logo.jpg', // 分享图标
+		    success: function () { 
+		        // 用户确认分享后执行的回调函数
+		    },
+		    cancel: function () { 
+		        // 用户取消分享后执行的回调函数
+		    }
+		});
+	})
+}
+
+</script>
+<body>
+	<div style="display:none;"><img src="images/logo.jpg"></div>
+	<div id="music_butn"></div>
+	<audio controls="controls" hidden="hidden" autoplay="autoplay" loop="loop" src="music/music.mp3" id="music_a"></audio>
+	<div id="container">
+		<div id="hander"></div>
+		<div class="section">
+			<img src="images/1.1.jpg">
+		</div>
+		<div class="section">
+			<img src="images/2.2.jpg">
+			<img src="images/2.1.jpg" class="can_img" id="can_img2">
+		</div>
+		<div class="section">
+			<img src="images/3.2.jpg">
+			<img src="images/3.1.jpg" class="can_img" id="can_img3">
+		</div>
+		<div class="section">
+			<img src="images/4.2.jpg">
+			<img src="images/4.1.jpg" class="can_img" id="can_img4">
+		</div>
+		<div class="section">
+			<img src="images/5.2.jpg">
+			<img src="images/5.1.jpg" class="can_img" id="can_img5">
+		</div>
+		<div class="section">
+			<img src="images/6.2.jpg">
+			<img src="images/6.1.jpg">
+		</div>
+		<div class="section">
+			<img src="images/7.0.jpg">
+			<a href="http://m.maoyan.com/#tmp=movie&movieid=248800" class="link_butn"></a>
+		</div>
+		<canvas id="canvas1"></canvas>
+		<div id="up_arrow"></div>
+	</div>
+</body>
+<script type="text/javascript">
+	var offButn=true;
+	var musicButn=document.getElementById("music_butn");
+	var oMusic=document.getElementById("music_a");
+	musicButn.onclick=function(){
+		if(offButn){
+			offButn=!offButn;
+			oMusic.src="";
+		}else{
+			offButn=!offButn;
+			oMusic.src="music/music.mp3";
+		}
+	}
+</script>
+<script type="text/javascript">
+	$('.link_butn').click(function(event) {
+		$.ajax({
+			url: 'http://twttmob.com/api.php/Task/UserClick',
+			type: 'POST',
+			dataType: 'json',
+			complete: function(xhr, textStatus) {
+				//called when complete
+			},
+			success: function(json) {
+				//alert("ok")
+			},
+			error: function(json) {}
+		})		
+	})
+</script>
+
+</html>
