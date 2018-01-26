@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>趁云华正茂，进火星潘多拉看看</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no,target-densityDpi=device-dpi">
+    <link rel="stylesheet" type="text/css" href="css/style.css?v8">
+    <link rel="stylesheet" href="css/swiper.min.css">
+    <script type="text/javascript" src="js/jquery-2.1.3.min.js"></script>
+    <script type="text/javascript" src="js/weixin.js"></script>
+</head>
+<body>
+    <!--加载页面-->
+    <div class="load_page">
+    </div>
+    <!--加载页面-->
+    <div class="swiper-container swiper-container2">
+        <div class="swiper-wrapper">
+            <div class="swiper-slide">
+                <div class="first_font"><img src="images/first_font.png"></div>
+                <div class="mars"><img src="images/mars.png"></div>
+                <div class="rocket_box">
+                    <img src="images/rocket.png">
+                    <img src="images/hand.png" class="hand">
+                </div>
+            </div>
+            <div class="swiper-slide">
+                <img src="images/space.png" class="space">
+                <div class="xingqiu"><img src="images/xingqiu.png"></div>
+                <div class="second_font"><img src="images/second_font.png"></div>
+                <div class="rocket2">
+                    <img src="images/rocket2.png">
+                </div>
+            </div>
+            <div class="swiper-slide">
+                <div class="de_box"><img src="images/de.png"></div>
+                <div class="lx1_box">
+                    <img src="images/lx.png">
+                </div>
+                <div class="lx2_box">
+                    <img src="images/lx.png">
+                </div>
+                <div class="three_font"><img src="images/three_font.png"></div>
+                <div class="rocket3"><img src="images/rocket3.png">></div>
+            </div>
+            <div class="swiper-slide">
+                <div class="person"><img src="images/person.png"></div>
+                <div class="bottles"><img src="images/bottles.png"></div>
+                <div class="four_font"><img src="images/four_font.png"></div>
+            </div>
+            <div class="swiper-slide">
+                <div class="five_font"><img src="images/five_font.png"></div>
+                <div class="rotate_qiu">
+                    <img src="images/black.png" class="black_cir">
+                    <img src="images/xingqiu2.png" class="xingqiu2">
+                </div>
+            </div>
+            <div class="swiper-slide">
+                <div class="xingqiu3"><img src="images/xingqiu3.png"></div>
+                <div class="light_box"><img src="images/light.png"></div>
+                <div class="six_font"><img src="images/six_font.png"></div>
+            </div>
+            <div class="swiper-slide">
+                <div class="xingqiu4">
+                    <img src="images/xingqiu4.png">
+                    <img src="images/pic1.png" class="xq4_pic1">
+                    <img src="images/pic2.png" class="xq4_pic2">
+                    <img src="images/pic3.png" class="xq4_pic3">
+                    <img src="images/pic4.png" class="xq4_pic4">
+                    <img src="images/pic5.png" class="xq4_pic5">
+                </div>
+                <img src="images/yun1.png" class="yun1">
+                <img src="images/yun2.png" class="yun2">
+                <div class="seven_font"><img src="images/seven.png"></div>
+            </div>
+            <div class="swiper-slide">
+                <div class="eight_font"><img src="images/eight.png"></div>
+                <div class="nine_font"><img src="images/nine.png"></div>
+                <div class="xue_box"><img src="images/xue.png"></div>
+                <div class="ET_box">
+                    <img src="images/ET.png">
+                    <img src="images/yhy.png" class="yhy">
+                </div>
+            </div>
+        </div>
+        <div id="up_arrow"></div>
+    </div>
+    <div id="music_butn" class="cur"></div>
+    <audio src="http://7xkxd4.media1.z0.glb.clouddn.com/h520150515/mars/music.mp3?wsiphost=local" style="display:none;" class="music" loop="loop"></audio>
+</body>
+<script src="js/swiper.min.js"></script>
+<script>
+    $(function() {
+        var len2=0;//获取swiper-slide的个数
+        var arrAni=[];//存放出场和进场动画
+        var num=0;///加载页面初始
+        var version = navigator.userAgent;
+        var wx = 'MicroMessenger';
+        var ad = 'Android';
+        var ip = 'iPhone';
+        var success = false;
+        var iosph = false;
+        var andph = false;
+        $(document).on("touchmove",function(ev){
+            ev.preventDefault();
+        });
+        //////////////加载页面
+        var arr=[
+            "images/arrow.png",
+            "images/bg1.jpg",
+            "images/bg2.png",
+            "images/bg3.jpg",
+            "images/bg4.jpg",
+            "images/bg5.jpg",
+            "images/bg6.jpg",
+            "images/bg7.jpg",
+            "images/bg8.jpg",
+            "images/black.png",
+            "images/bottles.png",
+            "images/de.png",
+            "images/eight.png",
+            "images/ET.png",
+            "images/first_font.png",
+            "images/five_font.png",
+            "images/four_font.png",
+            "images/hand.png",
+            "images/light.png",
+            "images/loading1.gif",
+            "images/logo.jpg",
+            "images/lx.png",
+            "images/mars.png",
+            "images/mcbg_1.png",
+            "images/mcbg_2.png",
+            "images/nine.png",
+            "images/person.png",
+            "images/pic1.png",
+            "images/pic2.png",
+            "images/pic3.png",
+            "images/pic4.png",
+            "images/pic5.png",
+            "images/rocket.png",
+            "images/rocket2.png",
+            "images/rocket3.png",
+            "images/second_font.png",
+            "images/seven.png",
+            "images/six_font.png",
+            "images/space.png",
+            "images/three_font.png",
+            "images/xingqiu.png",
+            "images/xingqiu2.png",
+            "images/xingqiu3.png",
+            "images/xingqiu4.png",
+            "images/xue.png",
+            "images/yhy.png",
+            "images/yun1.png",
+            "images/yun2.png"
+        ];
+        for(var i=0;i<arr.length;i++){
+            var oImg=new Image();
+            oImg.onload=function(){
+                progress();
+            }
+            oImg.onerror=function(){
+                progress();
+            }
+            oImg.src=arr[i];
+            function progress(){
+                num++;
+                if(num==arr.length){
+                    $(".load_page").hide();
+                    $(".music").get(0).play();
+                }
+            }
+        }
+        //////////////加载页面
+        if(version.indexOf(wx) >= 0 ){
+            success = true;
+            $("<script>",{
+                src: 'http://twttmob.com/count.js',
+                type: 'text/javascript'
+            }).appendTo('body');
+        };
+        ///////
+
+        $(".rotate_qiu").css("height",$(window).width()*0.7937);
+        $("#music_butn").css("height",$(window).width()*0.078);
+        $("#up_arrow").css("height",$(window).width()*0.0625/1.38);
+        ////第一页火箭发射
+        $(".rocket_box").on("touchstart",function(){
+            arrAni[0].inAn();
+        });
+
+        /////
+        $(".rocket3").on("transitionend webkitTransitionEnd",function(){
+            $(this).css({"transition":"","animation":" xingqiu_ani 1s linear 0s infinite"});
+        });
+
+        ///
+        $(".ET_box").on("animationend webkitAnimationEnd",function(){
+            $(this).find(".yhy").addClass('cur');
+        });
+        ///////播放音乐
+        $("#music_butn").on("touchstart",function(){
+            if($(".music").get(0).paused){
+                $("#music_butn").addClass("cur");
+                $(".music").get(0).play();
+            }else{
+                $("#music_butn").removeClass("cur");
+                $(".music").get(0).pause();
+            } 
+        })
+        ///////播放音乐
+        ///////////////////////
+        var mySwiper2 = new Swiper('.swiper-container2', {
+            direction: 'vertical',
+            mousewheelControl: true,
+            longSwipesRatio : 0.1,
+            onInit: function(swiper) {
+                len2=$(".swiper-container2 .swiper-slide").length-1;
+                swiper.myactive = 0;
+                arrAni=[
+                    {
+                        inAn:function(){
+                            $(".swiper-container2 .swiper-slide").eq(0).find(".hand").addClass('cur');
+                            $(".swiper-container2 .swiper-slide").eq(0).find(".mars").addClass('cur');
+                            $(".swiper-container2 .swiper-slide").eq(0).find(".rocket_box").addClass('cur');
+                            $(".swiper-container2 .swiper-slide").eq(0).find(".first_font").css({
+                                "transition": '7s 2s',
+                                "height": $(window).width()*0.753/2.033
+                            });
+                        },
+                        outAn:function(){
+                            $(".swiper-container2 .swiper-slide").eq(0).find(".hand").removeClass('cur');
+                            $(".swiper-container2 .swiper-slide").eq(0).find(".mars").removeClass('cur');
+                            $(".swiper-container2 .swiper-slide").eq(0).find(".rocket_box").removeClass('cur');
+                            $(".swiper-container2 .swiper-slide").eq(0).find(".first_font").css({
+                                "transition": '',
+                                "height": 0
+                            });
+                        }
+                    },
+                    {
+                        inAn:function(){
+                            $(".swiper-container2 .swiper-slide").eq(1).find(".space").addClass('cur');
+                            $(".swiper-container2 .swiper-slide").eq(1).find(".rocket2").addClass('cur');
+                            $(".swiper-container2 .swiper-slide").eq(1).find(".second_font").css({
+                                "transition": '5s 3s',
+                                "height": $(window).width()*0.5156/1.62
+                            });
+                        },
+                        outAn:function(){
+                            $(".swiper-container2 .swiper-slide").eq(1).find(".space").removeClass('cur');
+                            $(".swiper-container2 .swiper-slide").eq(1).find(".rocket2").removeClass('cur');
+                            $(".swiper-container2 .swiper-slide").eq(1).find(".second_font").css({
+                                "transition": '',
+                                "height":0
+                            });
+                        }
+                    },
+                    {
+                        inAn:function(){
+                            $(".swiper-container2 .swiper-slide").eq(2).find(".lx1_box").addClass('cur');
+                            $(".swiper-container2 .swiper-slide").eq(2).find(".lx2_box").addClass('cur');
+                            $(".swiper-container2 .swiper-slide").eq(2).find(".rocket3").addClass('cur');
+                            $(".swiper-container2 .swiper-slide").eq(2).find(".three_font").addClass('cur');
+                            $(".swiper-container2 .swiper-slide").eq(2).find(".three_font").css({
+                                "transition": '5s 3s',
+                                "height": $(window).width()*0.6687/2.517
+                            });
+                        },
+                        outAn:function(){
+                            $(".swiper-container2 .swiper-slide").eq(2).find(".lx1_box").removeClass('cur');
+                            $(".swiper-container2 .swiper-slide").eq(2).find(".lx2_box").removeClass('cur');
+                            $(".swiper-container2 .swiper-slide").eq(2).find(".rocket3").removeClass('cur').css("animation","");
+                            $(".swiper-container2 .swiper-slide").eq(2).find(".three_font").css({
+                                "transition": '',
+                                "height": 0
+                            });
+                        } 
+                    },
+                    {
+                        inAn:function(){
+                            $(".swiper-container2 .swiper-slide").eq(3).find(".person").addClass('cur');
+                            $(".swiper-container2 .swiper-slide").eq(3).find(".bottles").addClass('cur');
+                            $(".swiper-container2 .swiper-slide").eq(3).find(".four_font").css({
+                                "transition": '5s 3s',
+                                "height": $(window).width()*0.51/1.837
+                            });
+                        },
+                        outAn:function(){
+                            $(".swiper-container2 .swiper-slide").eq(3).find(".person").removeClass('cur');
+                            $(".swiper-container2 .swiper-slide").eq(3).find(".bottles").removeClass('cur');
+                            $(".swiper-container2 .swiper-slide").eq(3).find(".four_font").css({
+                                "transition": '',
+                                "height": 0
+                            });
+                        }
+                    },
+                    {
+                        inAn:function(){
+                            $(".swiper-container2 .swiper-slide").eq(4).find(".xingqiu2").addClass('cur');
+                            $(".swiper-container2 .swiper-slide").eq(4).find(".five_font").css({
+                                "transition": '5s 1s',
+                                "height": $(window).width()*0.453/2.26
+                            });
+                        },
+                        outAn:function(){
+                            $(".swiper-container2 .swiper-slide").eq(4).find(".xingqiu2").removeClass('cur');
+                            $(".swiper-container2 .swiper-slide").eq(4).find(".five_font").css({
+                                "transition": '',
+                                "height": 0
+                            });
+                        }
+                    },
+                    {
+                        inAn:function(){
+                            $(".swiper-container2 .swiper-slide").eq(5).find(".xingqiu3").addClass('cur');
+                            $(".swiper-container2 .swiper-slide").eq(5).find(".light_box").addClass('cur');
+                            $(".swiper-container2 .swiper-slide").eq(5).find(".six_font").css({
+                                "transition": '5s 1s',
+                                "height": $(window).width()*0.5937/2.25
+                            });
+                        },
+                        outAn:function(){
+                            $(".swiper-container2 .swiper-slide").eq(5).find(".xingqiu3").removeClass('cur');
+                            $(".swiper-container2 .swiper-slide").eq(5).find(".light_box").removeClass('cur');
+                            $(".swiper-container2 .swiper-slide").eq(5).find(".six_font").css({
+                                "transition": '',
+                                "height": 0
+                            });
+                        }
+                    },
+                    {
+                        inAn:function(){
+                            $(".swiper-container2 .swiper-slide").eq(6).find(".xingqiu4").find("img").each(function(index, el) {
+                                $(this).addClass('cur');
+                            });
+                            $(".swiper-container2 .swiper-slide").eq(6).find(".yun1").addClass('cur');
+                            $(".swiper-container2 .swiper-slide").eq(6).find(".yun2").addClass('cur');
+                            $(".swiper-container2 .swiper-slide").eq(6).find(".seven_font").css({
+                                "transition": '5s 1s',
+                                "height": $(window).width()*0.6312/2.29
+                            });
+                        },
+                        outAn:function(){
+                            $(".swiper-container2 .swiper-slide").eq(6).find(".xingqiu4").find("img").each(function(index, el) {
+                                $(this).removeClass('cur');
+                            });
+                            $(".swiper-container2 .swiper-slide").eq(6).find(".yun1").removeClass('cur');
+                            $(".swiper-container2 .swiper-slide").eq(6).find(".yun2").removeClass('cur');
+                            $(".swiper-container2 .swiper-slide").eq(6).find(".seven_font").css({
+                                "transition": '',
+                                "height":0
+                            });
+                        }
+                    },
+                    {
+                        inAn:function(){
+                            $(".swiper-container2 .swiper-slide").eq(7).find(".ET_box").addClass('cur');
+                            $(".swiper-container2 .swiper-slide").eq(7).find(".eight_font").css({
+                                "transition": '2s 2s',
+                                "height": $(window).width()*0.36/2.74
+                            });
+                            $(".swiper-container2 .swiper-slide").eq(7).find(".nine_font").css({
+                                "transition": '2s 5s',
+                                "height": $(window).width()*0.6/3.84
+                            });
+                            $(".swiper-container2 .swiper-slide").eq(7).find(".xue_box").addClass('cur');
+                        },
+                        outAn:function(){
+                            $(".swiper-container2 .swiper-slide").eq(7).find(".ET_box").removeClass('cur');
+                            $(".swiper-container2 .swiper-slide").eq(7).find(".ET_box").find(".yhy").removeClass('cur');
+                            $(".swiper-container2 .swiper-slide").eq(7).find(".eight_font").css({
+                                "transition": '',
+                                "height": 0
+                            });
+                            $(".swiper-container2 .swiper-slide").eq(7).find(".nine_font").css({
+                                "transition": '',
+                                "height": 0
+                            });
+                            $(".swiper-container2 .swiper-slide").eq(7).find(".xue_box").removeClass('cur');
+                        }
+                    }
+                ];
+            },
+            onSlideChangeEnd: function(swiper, speed) {
+                swiper.myactive = swiper.activeIndex;
+                if(swiper.activeIndex==len2){
+                    $("#up_arrow").hide();
+                }else{
+                    $("#up_arrow").show();
+                }
+                ////过渡之后让其他页面执行出场动画，当前执行进场动画
+                $.each(arrAni,function(index, el) {
+                    arrAni[index].outAn();
+                });
+                if(arrAni[swiper.activeIndex]){
+                    if(swiper.activeIndex!=0){
+                        arrAni[swiper.activeIndex].inAn();
+                    }
+                }
+                ////过渡之后让其他页面执行出场动画，当前执行进场动画
+            }
+        });
+    });
+</script>
+<script>
+    var url = location.href.split('#')[0];
+    $.ajax({
+        url: 'http://twttmob.com/active.php/Token/index',
+        type: 'POST',
+        dataType: 'json',
+        data: {url: url},
+        complete: function(xhr, textStatus) {
+            //called when complete
+        },
+        success: function(json) {
+            console.log(json)
+            Weixin(json)
+        },
+        error: function(json) {}
+    })
+
+    function Weixin(json) {
+        wx.config({
+            debug: false,
+            appId: 'wx1db0926b8dcc8327',
+            timestamp: json.timestamp,
+            nonceStr: json.noncestr,
+            signature: json.signature,
+            jsApiList: [
+                'checkJsApi',
+                'onMenuShareTimeline',
+                'onMenuShareAppMessage'
+            ]
+        })
+        wx.ready(function() {
+            wx.checkJsApi({
+                jsApiList: [
+                    'onMenuShareTimeline',
+                    'onMenuShareAppMessage'
+                ],
+                success: function(res) {
+                    //alert(JSON.stringify(res));
+                }
+            })
+            wx.onMenuShareTimeline({
+                title: '趁云华正茂，进火星潘多拉看看', // 分享标题
+                link: '', // 分享链接
+                imgUrl: 'http://h5.twttmob.com/huoxing/images/logo.jpg', // 分享图标
+                success: function () { 
+                    // 用户确认分享后执行的回调函数
+                },
+                cancel: function () { 
+                    
+                }
+            });
+            wx.onMenuShareAppMessage({
+                title: '趁云华正茂，进火星潘多拉看看', // 分享标题
+                desc: '趁云华正茂，进火星潘多拉看看', // 分享描述
+                link: '', // 分享链接
+                imgUrl: 'http://h5.twttmob.com/huoxing/images/logo.jpg', // 分享图标
+                success: function () { 
+                    // 用户确认分享后执行的回调函数
+                },
+                cancel: function () { 
+                    // 用户取消分享后执行的回调函数
+                }
+            });
+        })
+    }
+</script>
+</html>
